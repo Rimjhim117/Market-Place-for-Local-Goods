@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fbe6e6; /* Soft Coral */
+            margin: 0;
+        }
+
+        .login-container {
+            width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #c74c5e; /* Dark Coral */
+        }
+
+        .input-group {
+            margin: 10px 0;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            background-color: #ff7f7f; /* Coral Button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff4d4d; /* Darker Coral on hover */
+        }
+
+        .link {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .info-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffe6e6; /* Light Coral background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section h3 {
+            text-align: center;
+            color: #c74c5e; /* Dark Coral */
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .info-section ul li {
+            margin: 10px 0;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login to Your Marketplace Account</h2>
+        <form action="/login" method="POST">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="link">
+            <a href="/">Back to Home</a>
+        </div>
+
+        <!-- Marketplace Info Section -->
+        <div class="info-section">
+            <h1>Welcome to Marketplace for Local Goods</h1>
+            <p>Your one-stop platform to buy and sell local products from your community!</p>
+            <h3>Why Join Our Marketplace?</h3>
+            <p>By logging in, you can access a variety of local products and support small businesses in your community. Here’s why you should join:</p>
+            <ul>
+                <li><i class="fas fa-store"></i> Access to Local Sellers</li>
+                <li><i class="fas fa-shipping-fast"></i> Convenient Shopping Experience</li>
+                <li><i class="fas fa-heart"></i> Support Your Local Economy</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

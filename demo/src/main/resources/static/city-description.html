@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Description</title>
+    <style>
+        /* Your existing styles remain unchanged */
+        body {
+            background-color: #87CEEB; /* Sky blue background */
+            color: #333; /* Dark gray for the text */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        h1, h2, h3 {
+            color: #4682B4; /* Steel blue for headers */
+            text-align: center;
+            font-family: 'Georgia', serif;
+        }
+
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .city-select, .btn {
+            background-color: #6495ED; /* Cornflower Blue for select and buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .city-select:hover, .btn:hover {
+            background-color: #4169E1; /* Royal Blue on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            background-color: #ffffff; /* White background for sections */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: slideIn 1s forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section-title {
+            color: #4682B4;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .list li {
+            background-color: #E6F7FF; /* Light blue background for list items */
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .list li:hover {
+            transform: translateX(5px); /* Slightly move right on hover */
+            background-color: #B0E0E6; /* Powder Blue on hover */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+            padding: 10px 0;
+            background-color: #4682B4; /* Steel Blue footer */
+            color: white;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-btn {
+            background-color: #6495ED;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-btn:hover {
+            background-color: #4169E1;
+            transform: scale(1.1);
+        }
+
+        .info-section {
+            margin-bottom: 30px;
+        }
+
+        .section {
+            border: 2px solid #4682B4;
+        }
+
+        .city-info {
+            font-size: 18px;
+ line-height: 1.6;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>City Description</h1>
+
+    <div class="info-section">
+        <h3 class="section-title">City Description</h3>
+        <p id="cityDescription"></p>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Famous Places</h3>
+        <ul id="famousPlacesList" class="list"></ul>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Famous Temples</h3>
+        <ul id="templesList" class="list"></ul>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Local Street Food</h3>
+        <ul id="foodList" class="list"></ul>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Local Goods</h3>
+        <ul id="goodsList" class="list"></ul>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Local Fruits</h3>
+        <ul id="fruitsList" class="list"></ul>
+    </div>
+
+    <div class="info-section">
+        <h3 class="section-title">Boat Riding Costs</h3>
+        <p id="boatRidingCost"></p>
+    </div>
+
+    <button class="back-btn" onclick="window.history.back()">Back to City Selection</button>
+
+    <div class="footer">
+        <p>&copy; <span id="currentYear"></span> City Preferences. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const city = urlParams.get('city');
+
+        const cityData = {
+            Prayagraj: {
+                description: "Prayagraj is a city with a deep spiritual history...",
+                famousPlaces: ["Aanand Bhawan", "Triveni Sangam", "Prayagraj Kumbh Mela"],
+                temples: ["Hanuman Mandir", "Allahabad Temple", "Beni Madhav Ka Mandir"],
+                food: [
+                    { name: "Chaat", link: "https://example.com/chaat", price: "₹50" },
+                    { name: "Tunday Kebab", link: "https://example.com/tunday-kebab", price: "₹150" },
+                    { name: "Lassi", link: "https://example.com/lassi", price: "₹30" },
+                    { name: "Prayag Sweets", link: "https://example.com/prayag-sweets", price: "₹100" }
+                ],
+                goods: [
+                    { name: "Chikan Embroidery", price: "₹500–₹5000", description: "Traditional hand-embroidered fabrics.", link: "https://example.com/chikan-embroidery" },
+                    { name: "Brassware", price: "₹200–₹3000", description: "Handcrafted brass items.", link: "https://example.com/brassware" },
+                    { name: "Wooden Toys", price: "₹100–₹2000", description: "Handmade wooden toys.", link: "https://example.com/wooden-toys" }
+                ],
+                fruits: ["Guava", "Lychee", "Mango"],
+                boatRidingCost: "Boat rides at Triveni Sangam cost around ₹200 per person.",
+            },
+            Delhi: {
+                description: "Delhi, the capital city of India, is known for its historical landmarks and vibrant culture...",
+                famousPlaces: ["India Gate", "Red Fort", "Qutub Minar"],
+                temples: ["Lotus Temple", "ISKCON Temple", "Jama Masjid"],
+                food: [
+                    { name: "Chaat", link: "https://example.com/chaat-delhi", price: "₹30" },
+                    { name: "Butter Chicken", link: "https://example.com/butter-chicken", price: "₹250" },
+                    { name: "Paranthas", link: "https://example.com/paranthas", price: "₹100" }
+                ],
+                goods: [
+                    { name: "Handicrafts", price: "₹200–₹5000", description: "Traditional Indian handicrafts.", link: "https://example.com/handicrafts-delhi" },
+                    { name: "Spices", price: "₹100–₹2000", description: " A variety of spices from local markets.", link: "https://example.com/spices-delhi" },
+                    { name: "Books", price: "₹100–₹5000", description: "Books from famous bookstores in Delhi.", link: "https://example.com/books-delhi" }
+                ],
+                fruits: ["Mango", "Guava", "Apple"],
+                boatRidingCost: "Boat rides at the India Gate cost around ₹150 per person.",
+            },
+            Mumbai: {
+                description: "Mumbai, the financial capital of India, is known for its bustling life and iconic landmarks...",
+                famousPlaces: ["Gateway of India", "Marine Drive", "Elephanta Caves"],
+                temples: ["Siddhivinayak Temple", "Haji Ali Dargah", "Mahalaxmi Temple"],
+                food: [
+                    { name: "Vada Pav", link: "https://example.com/vada-pav", price: "₹20" },
+                    { name: "Pav Bhaji", link: "https://example.com/pav-bhaji", price: "₹50" },
+                    { name: "Bhel Puri", link: "https://example.com/bhel-puri", price: "₹30" }
+                ],
+                goods: [
+                    { name: "Kolhapuri Chappals", price: "₹500–₹3000", description: "Traditional handmade sandals.", link: "https://example.com/kolhapuri-chappals" },
+                    { name: "Mithai", price: "₹100–₹2000", description: "Sweets from local shops.", link: "https://example.com/mithai" },
+                    { name: "Fashion Accessories", price: "₹200–₹5000", description: "Trendy accessories from local markets.", link: "https://example.com/fashion-accessories" }
+                ],
+                fruits: ["Mango", "Banana", "Pineapple"],
+                boatRidingCost: "Boat rides from Gateway of India cost around ₹300 per person.",
+            },
+            Kolkata: {
+                description: "Kolkata, known as the City of Joy, is famous for its rich culture and heritage...",
+                famousPlaces: ["Victoria Memorial", "Howrah Bridge", "Dakshineswar Kali Temple"],
+                temples: ["Kalighat Temple", "Belur Math", "Birla Mandir"],
+                food: [
+                    { name: "Puchka", link: "https://example.com/puchka", price: "₹20" },
+                    { name: "Kathi Roll", link: "https://example.com/kathi-roll", price: "₹50" },
+                    { name: "Mishti Doi", link: "https://example.com/mishti-doi", price: "₹30" }
+                ],
+                goods: [
+                    { name: "Sarees", price: "₹1000–₹10000", description: "Traditional Bengali sarees.", link: "https://example.com/sarees" },
+                    { name: "Handmade Crafts", price: "₹200–₹5000", description: "Local handicrafts and art.", link: "https://example.com/handmade-crafts" },
+                    { name: "Books", price: "₹100–₹5000", description: "Books from famous bookstores in Kolkata.", link: "https://example.com/books-kolkata" }
+                ],
+                fruits: ["Mango", "Lychee", "Jackfruit"],
+                boatRidingCost: "Boat rides on the Hooghly River cost around ₹250 per person.",
+            },
+            Chennai: {
+                description: "Chennai, known for its cultural heritage and beautiful beaches, is a major city in South India...",
+                famousPlaces: ["Marina Beach", "Kapaleeshwarar Temple", "Fort St. George"],
+                temples: ["Parakala Mutt", "Vadapalani Murugan Temple", "Ashtalakshmi Temple"],
+                food: [
+                    { name: "Dosa", link: "https://example.com/dosa", price: "₹50" },
+                    { name: "Idli", link: "https://example.com/idli", price: "₹30" },
+                    { name: "Sambar Rice", link: "https://example.com/sambar-rice", price: "₹70" }
+                ],
+                goods: [
+                    { name: "Silk Sarees", price: "₹2000–₹20000", description: "Traditional silk sarees from Kanchipuram.", link: "https://example.com/silk-sarees" },
+                    { name: "Tanjore Paintings", price: "₹5000–₹50000", description: "Famous traditional paintings.", link: " https://example.com/tanjore-paintings" },
+                    { name: "Handicrafts", price: "₹500–₹5000", description: "Local handicrafts and artifacts.", link: "https://example.com/handicrafts-chennai" }
+                ],
+                fruits: ["Mango", "Banana", "Papaya"],
+                boatRidingCost: "Boat rides at Marina Beach cost around ₹150 per person.",
+            },
+            Hyderabad: {
+                description: "Hyderabad, known for its rich history and culinary delights, is a major city in South India...",
+                famousPlaces: ["Charminar", "Golconda Fort", "Hussain Sagar Lake"],
+                temples: ["Birla Mandir", "Jagannath Temple", "Shri Peddamma Temple"],
+                food: [
+                    { name: "Hyderabadi Biryani", link: "https://example.com/hyderabadi-biryani", price: "₹200" },
+                    { name: "Haleem", link: "https://example.com/haleem", price: "₹150" },
+                    { name: "Irani Chai", link: "https://example.com/irani-chai", price: "₹30" }
+                ],
+                goods: [
+                    { name: "Pearls", price: "₹500–₹50000", description: "Famous Hyderabadi pearls.", link: "https://example.com/pearls" },
+                    { name: "Handwoven Fabrics", price: "₹1000–₹10000", description: "Traditional handwoven textiles.", link: "https://example.com/handwoven-fabrics" },
+                    { name: "Banjara Jewelry", price: "₹200–₹5000", description: "Colorful traditional jewelry.", link: "https://example.com/banjara-jewelry" }
+                ],
+                fruits: ["Mango", "Guava", "Pomegranate"],
+                boatRidingCost: "Boat rides at Hussain Sagar Lake cost around ₹200 per person.",
+            },
+            Jaipur: {
+                description: "Jaipur, known as the Pink City, is famous for its historic palaces and vibrant culture...",
+                famousPlaces: ["Hawa Mahal", "Amber Fort", "City Palace"],
+                temples: ["Birla Mandir", "Galtaji Temple", "Moti Dungri Ganesh Temple"],
+                food: [
+                    { name: "Dal Baati Churma", link: "https://example.com/dal-baati-churma", price: "₹150" },
+                    { name: "Ghevar", link: "https://example.com/ghevar", price: "₹100" },
+                    { name: "Lassi", link: "https://example.com/lassi-jaipur", price: "₹50" }
+                ],
+                goods: [
+                    { name: "Blue Pottery", price: "₹500–₹5000", description: "Traditional blue pottery items.", link: "https://example.com/blue-pottery" },
+                    { name: "Jewelry", price: "₹200–₹20000", description: "Traditional Rajasthani jewelry.", link: "https://example.com/jewelry-jaipur" },
+                    { name: "Handicrafts", price: "₹100–₹10000", description: "Local handicrafts and souvenirs.", link: "https://example.com/handicrafts-jaipur" }
+                ],
+                fruits: ["Mango", "Pomegranate", "Guava"],
+                boatRidingCost: "Boat rides at Man Sagar Lake cost around ₹250 per person.",
+            },
+            Lucknow: {
+                description: "Lucknow, known for its rich history and exquisite cuisine, is a city in northern India...",
+                famousPlaces: ["Bara Imambara", "Chota Imambara", "Rumi Darwaza"],
+                temples: ["Mankameshwar Mandir", "Hanuman Mandir", "ISKCON Temple"],
+                food: [
+                    { name: "Tunday Kababi", link: "https://example.com/tunday-kababi", price: "₹200" },
+                    { name: "Galouti Kebab", link: "https://example.com/galouti-kebab", price: "₹250" },
+                    { name: "Biryani", link: "https://example.com/lucknowi-biryani", price: "₹300" }
+                ],
+                goods: [
+                    { name: "Chikan Embroidery", price: "₹500–₹5000", description: "Famous hand-embroidered fabrics.", link: "https://example.com/chikan-embroidery-lucknow" },
+                    { name: "Lucknowi Z ardozi", price: "₹1000–₹10000", description: "Traditional gold and silver embroidery.", link: "https://example.com/lucknowi-zardozi" },
+                    { name: "Brassware", price: "₹200–₹3000", description: "Handcrafted brass items.", link: "https://example.com/brassware-lucknow" }
+                ],
+                fruits: ["Mango", "Guava", "Lychee"],
+                boatRidingCost: "Boat rides on the Gomti River cost around ₹150 per person.",
+            },
+            Agra: {
+                description: "Agra, home to the iconic Taj Mahal, is a city rich in history and architecture...",
+                famousPlaces: ["Taj Mahal", "Agra Fort", "Fatehpur Sikri"],
+                temples: ["Mankameshwar Temple", "Shri Radha Madan Mohan Temple", "ISKCON Temple"],
+                food: [
+                    { name: "Petha", link: "https://example.com/petha", price: "₹50" },
+                    { name: "Mughlai Biryani", link: "https://example.com/mughlai-biryani", price: "₹200" },
+                    { name: "Chaat", link: "https://example.com/chaat-agra", price: "₹30" }
+                ],
+                goods: [
+                    { name: "Marble Inlay Work", price: "₹1000–₹10000", description: "Intricate marble crafts.", link: "https://example.com/marble-inlay" },
+                    { name: "Leather Goods", price: "₹500–₹5000", description: "High-quality leather products.", link: "https://example.com/leather-goods" },
+                    { name: "Handicrafts", price: "₹200–₹5000", description: "Local handicrafts and souvenirs.", link: "https://example.com/handicrafts-agra" }
+                ],
+                fruits: ["Mango", "Banana", "Papaya"],
+                boatRidingCost: "Boat rides on the Yamuna River cost around ₹200 per person.",
+            },
+            Varanasi: {
+                description: "Varanasi, one of the oldest cities in the world, is known for its spiritual significance and ghats...",
+                famousPlaces: ["Kashi Vishwanath Temple", "Dashashwamedh Ghat", "Sarnath"],
+                temples: ["Kashi Vishwanath Temple", "Durga Temple", "Bharat Mata Temple"],
+                food: [
+                    { name: "Kachori Sabzi", link: "https://example.com/kachori-sabzi", price: "₹40" },
+                    { name: "Lassi", link: "https://example.com/lassi-varanasi", price: "₹30" },
+                    { name: "Chaat", link: "https://example.com/chaat-varanasi", price: "₹20" }
+                ],
+                goods: [
+                    { name: "Banarasi Sarees", price: "₹2000–₹20000", description: "Famous silk sarees from Varanasi.", link: "https://example.com/banarasi-sarees" },
+                    { name: "Brassware", price: "₹500–₹5000", description: "Traditional brass items.", link: "https://example.com/brassware-varanasi" },
+                    { name: "Handicrafts", price: "₹200–₹5000", description: "Local handicrafts and souvenirs.", link: "https://example.com/handicrafts-varanasi" }
+                ],
+                fruits: ["Mango", "Guava", "Pomegranate"],
+                boatRidingCost: "Boat rides on the Ganges cost around ₹150 per person.",
+            },
+            Bangalore: {
+                description: "Bangalore, known as the Silicon Valley of India, is famous for its IT industry and pleasant climate...",
+                famousPlaces: ["Bangalore Palace", "Lalbagh Botanical Garden", "Vidhana Soudha"],
+                temples: ["Bull Temple", "ISKCON Temple", "Gavi Gangadhareshwara Temple"],
+                food: [
+                    { name: "Bisi Bele Bath", link: "https://example.com/bisi-bele-bath", price: "₹100" },
+                    { name: "Mysore Pak", link: "https://example.com/mysore-pak", price: "₹50" },
+                    { name: "Dosa", link: "https://example.com/dosa-bangalore", price: "₹40" }
+                ],
+                goods: [
+                    { name: "Silk Sarees ", price: "₹2000–₹20000", description: "Traditional silk sarees from Karnataka.", link: "https://example.com/silk-sarees-bangalore" },
+                    { name: "Handicrafts", price: "₹500–₹5000", description: "Local handicrafts and souvenirs.", link: "https://example.com/handicrafts-bangalore" },
+                    { name: "Coffee", price: "₹200–₹2000", description: "Famous South Indian coffee.", link: "https://example.com/coffee-bangalore" }
+                ],
+                fruits: ["Mango", "Banana", "Papaya"],
+                boatRidingCost: "Boat rides at Ulsoor Lake cost around ₹100 per person.",
+            },
+        };
+
+        // Load city data
+        if (city && cityData[city]) {
+            const data = cityData[city];
+            
+            // City description
+            document.getElementById("cityDescription").innerText = data.description;
+
+            // Famous places
+            data.famousPlaces.forEach(place => {
+                const li = document.createElement("li");
+                li.innerText = place;
+                document.getElementById("famousPlacesList").appendChild(li);
+            });
+
+            // Famous temples
+            data.temples.forEach(temple => {
+                const li = document.createElement("li");
+                li.innerText = temple;
+                document.getElementById("templesList").appendChild(li);
+            });
+
+            // Street food
+            data.food.forEach(food => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="${food.link}" target="_blank">${food.name}</a> - ${food.price}`;
+                document.getElementById("foodList").appendChild(li);
+            });
+
+            // Local goods
+            data.goods.forEach(good => {
+                const li = document.createElement("li");
+                li.innerHTML = `<a href="${good.link}" target="_blank">${good.name}</a> - ${good.price} (${good.description})`;
+                document.getElementById("goodsList").appendChild(li);
+            });
+
+            // Local fruits
+            data.fruits.forEach(fruit => {
+                const li = document.createElement("li");
+                li.innerText = fruit;
+                document.getElementById("fruitsList").appendChild(li);
+            });
+
+            // Boat riding cost
+            document.getElementById("boatRidingCost").innerText = data.boatRidingCost;
+        }
+
+        // Set current year in footer
+        document.getElementById("currentYear").innerText = new Date().getFullYear();
+    </script>
+</body>
+</html>

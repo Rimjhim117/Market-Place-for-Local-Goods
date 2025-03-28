@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #e0f7fa; /* Light Sky Blue */
+        }
+        h1 {
+            text-align: center;
+            color: #0288d1; /* Deep Sky Blue */
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .city-select {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #81d4fa; /* Sky Blue */
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+            display: block;
+        }
+        .city-select:hover {
+            background-color: #039be5; /* Darker Sky Blue */
+        }
+        .benefits {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #b3e5fc; /* Light Blue */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .benefits h3 {
+            margin-top: 0;
+            color: #0288d1; /* Deep Sky Blue */
+        }
+        .city-info {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #0288d1; /* Deep Sky Blue */
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #555;
+        }
+        .login-link {
+            font-size: 14px;
+            margin-top: 20px;
+            text-align: center;
+            color: #0288d1;
+        }
+        .login-link a {
+            color: #0288d1;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to City Preferences</h1>
+
+    <!-- City Selection Section -->
+    <div class="section">
+        <label for="citySelect">Select a City to Learn More:</label>
+        <select id="citySelect" class="city-select" onchange="redirectToCityPage(this.value)">
+            <option value="">--Select City--</option>
+            <option value="Prayagraj">Prayagraj</option>
+            <option value="Varanasi">Varanasi</option>
+            <option value="Agra">Agra</option>
+            <option value="Lucknow">Lucknow</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Kolkata">Kolkata</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Jaipur">Jaipur</option>
+        </select>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="section benefits">
+        <h3>Benefits of Using Our Website:</h3>
+        <ul>
+            <li>Get detailed information about cities including famous places, activities, and local items.</li>
+            <li>Easy access to local street food and shopping recommendations.</li>
+            <li>Know about the best temples and cultural experiences in each city.</li>
+            <li>Discover local fruits and seasonal items in every city.</li>
+        </ul>
+    </div>
+
+    <!-- City Info Preview -->
+    <div class="section city-info">
+        <h3>Learn More About Cities</h3>
+        <p>After selecting a city, you'll get detailed information including a description, famous places, local activities, food, and much more!</p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 City Preferences. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        function redirectToCityPage(city) {
+            // Ensure the user selects a city before redirecting
+            if (city) {
+                window.location.href = `/city-description.html?city=${city}`;
+            } else {
+                alert('Please select a city to proceed.');
+            }
+        }
+    </script>
+</body>
+</html>
